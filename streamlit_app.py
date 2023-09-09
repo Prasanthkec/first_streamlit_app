@@ -12,8 +12,7 @@ def get_fruit_list():
 if streamlit.button('Get fruit load list'):
             my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
             my_data_rows = get_fruit_list()
-            return my_cur.fetchall()
-streamlit.dataframe(my_data_rows)
+            streamlit.dataframe(my_data_rows)
 
 streamlit.title('My parents first Healthy Diner')
 streamlit.header('🥣 Breakfast Menu')
