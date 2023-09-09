@@ -2,13 +2,14 @@ import snowflake.connector
 import streamlit
 import pandas
 import requests
+from urllib.error import URLERROR
+
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
 my_cur = my_cnx.cursor()
 my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
 my_data_rows = my_cur.fetchall()
 streamlit.header("The fruitload list contains")
 streamlit.dataframe(my_data_rows)
-
 
 streamlit.title('My parents first Healthy Diner')
 streamlit.header('🥣 Breakfast Menu')
@@ -21,7 +22,7 @@ my_fruit_list = my_fruit_list.set_index('Fruit')
 fruits_selected = streamlit.multiselect("Pick some fruits",list(my_fruit_list.index),['Avocado','Strawberries'])
 fruits_to_show = my_fruit_list.loc[fruits_selected]
 streamlit.dataframe(fruits_to_show)
-
+streamlit.stop()
 streamlit.header('Fruityvice fruit advice')
 
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
