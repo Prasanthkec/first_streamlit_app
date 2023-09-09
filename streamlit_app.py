@@ -4,15 +4,7 @@ import pandas
 import requests
 from urllib.error import URLError
 
-streamlit.header("The fruitload list contains")
-def get_fruit_list():
-            with my_cnx.cursor() as my_cur:
-                        my_cur.execute("select * from fruit_load_list")
-                        return my_cur.fetchall()
-if streamlit.button('Get fruit load list'):
-            my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-            my_data_rows = get_fruit_list()
-            streamlit.dataframe(my_data_rows)
+
 
 streamlit.title('My parents first Healthy Diner')
 streamlit.header('🥣 Breakfast Menu')
@@ -46,7 +38,7 @@ streamlit.write('The user entered ', fruit_choice)
 
 def insert_row_snowflake(new_fruit):
             with my_cnx.cursor() as my_cur:
-                        my_cur.execute("insert into fruit_load_list values('"+ ???? +"')")
+                        my_cur.execute("insert into fruit_load_list values('"+ guava + papaya "')")
                         return "Thanks for adding " + new_fruit
 
 add_my_fruit = streamlit.text_input('What fruit would you like to add')
@@ -55,4 +47,13 @@ if streamlit.button('Add a Fruit to The List') :
                                     streamlit.text(insert_row_snowflake(add_my_fruit))
 
 
-
+streamlit.header("The fruitload list contains")
+def get_fruit_list():
+            with my_cnx.cursor() as my_cur:
+                        my_cur.execute("select * from fruit_load_list")
+                        return my_cur.fetchall()
+if streamlit.button('Get fruit load list'):
+            my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+            my_data_rows = get_fruit_list()
+            my_cnx.close()
+            streamlit.dataframe(my_data_rows)
