@@ -4,11 +4,15 @@ import pandas
 import requests
 from urllib.error import URLError
 
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
-my_data_rows = my_cur.fetchall()
 streamlit.header("The fruitload list contains")
+def get_fruit_list():
+            with my_cnx.cursor() as my_cur:
+                        my_cur.execute("select * from fruit_loaad_list")
+                        return my_cur.fetchall()
+if streamlit.button('Get fruit load list'):
+            my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+            my_data_rows = get_fruit_list()
+            reurn my_cur.fetchall()
 streamlit.dataframe(my_data_rows)
 
 streamlit.title('My parents first Healthy Diner')
